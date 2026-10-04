@@ -1,0 +1,55 @@
+name: brain-boot
+version: 1.0.0
+manifest_version: 2
+api_version: 1
+description: >-
+  Loads shared memory (the "brain" git repo) at session start and injects the
+  facts learned on the OTHER hosts into the first turn.
+author: AlphaPerseii3000
+license: MIT
+tags: [memory, brain, session-start, multi-host]
+# The loader compares these lists to what register(ctx) actually wires
+# (`hermes plugins validate`): an incomplete list = plugin refused by the catalog.
+provides_hooks:
+  - on_session_start
+  - pre_llm_call
+  - on_session_reset
+config_schema:
+  enabled:
+    type: bool
+    default: true
+    label: Automatic loading
+    description: >-
+      Master switch. Off: the plugin still loads but injects nothing and syncs
+      nothing.
+  max_chars:
+    type: int
+    default: 2500
+    label: Injection budget (characters)
+    description: >-
+      Cap of the block injected on the first turn. Facts are truncated beyond it;
+      too large a budget drowns the prompt of the task at hand.
+  max_facts:
+    type: int
+    default: 12
+    label: Number of facts
+    description: Maximum number of facts injected (most recent first).
+  boot_timeout_s:
+    type: float
+    default: 6.0
+    label: Git pull wait (s)
+    description: >-
+      Maximum first-turn wait for the background git sync. Beyond it, injection
+      uses the local state already present (never a long stall).
+  include_own_host:
+    type: bool
+    default: false
+    label: Include this host's facts
+    description: >-
+      Off (recommended): inject only what the OTHER hosts learned — that is the
+      missing information. On: inject every host.
+  exclude_tags:
+    type: list
+    default: [obsolete, test]
+    label: Excluded tags
+    description: Facts carrying one of these tags are skipped (noise, superseded).
