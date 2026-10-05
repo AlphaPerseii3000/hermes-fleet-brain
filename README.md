@@ -4,6 +4,8 @@
 ![Python: stdlib only](https://img.shields.io/badge/Python-3.9%2B%20stdlib-green.svg)
 ![No databases](https://img.shields.io/badge/state-never%20synced-red.svg)
 
+![Fleet Brain — a shared brain wiring several machines into one memory](assets/hermes-fleet-brain.jpg)
+
 **One git repo. Several machines. Your agents remember together — and you can read what they know.**
 
 Two hosts running [Hermes Agent](https://github.com/NousResearch/hermes-agent) learn different things. Fleet Brain makes what each one learns available to the other — without syncing a single database, and without a merge conflict ever crossing your path.
@@ -130,6 +132,7 @@ skill/SKILL.md          # the convention, installed by `install-skill`
 soul/journal-decisions.md  # the standing rule, installed by `install-soul`
 docs/                   # architecture + visibility doctrine
 examples/               # what a fact and a decision entry look like
+assets/                 # cover art used by this README
 tests/test_smoke.py     # end-to-end smoke test (stdlib only)
 ```
 
